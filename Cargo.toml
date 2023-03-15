@@ -4,4 +4,3 @@ name = "secret-handshake"
 version = "1.1.0"
 
 [dependencies]
-int-enum = "0.5.0"
