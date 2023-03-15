@@ -1,28 +1,20 @@
 
+const SIGNS: [&str; 4] = ["wink", "double blink", "close your eyes", "jump"];
+const REVERSE_SIGNS: u8 = 0b10000;
+
 pub fn actions(n: u8) -> Vec<&'static str> {
-    let wink: u8 = 0b00001;
-    let double_blink: u8 = 0b00010;
-    let close_your_eyes: u8 = 0b00100;
-    let jump: u8 = 0b01000;
-    let reverse: u8 = 0b10000;
-
-    let mut v: Vec<&'static str> = Vec::new();
-    if n & wink == wink {
-        v.push("wink");
+    let (mut action, action_incr, end) = match n & REVERSE_SIGNS {
+        0 => (0, 1, 4),
+        _ => (3, -1, -1),
+    };
+    let mut output: Vec<&'static str> = Vec::new();
+    
+    while action != end {
+        if (n & (1 << action)) != 0 {
+            output.push(SIGNS[action as usize])
+        }
+        action += action_incr
     }
-    if n & double_blink == double_blink {
-        v.push("double blink");
-    }
-    if n & close_your_eyes == close_your_eyes {
-        v.push("close your eyes");
-    }
-    if n & jump == jump {
-        v.push("jump");
-    }
-    if n & reverse == reverse {
-        v.reverse();
-    }
-
-    v
-
+    output
 }
+
